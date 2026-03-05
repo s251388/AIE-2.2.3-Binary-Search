@@ -5,7 +5,7 @@
 using namespace std;
 
 
-int BubbleSort(int Array[], size_t Size) {
+void BubbleSort(int Array[], size_t Size) {
 
 	bool Swapped;
 
@@ -21,16 +21,11 @@ int BubbleSort(int Array[], size_t Size) {
 				Swapped = true;
 
 			}
-
-			cout << Array[i] << ", ";					// I wanted to make sure the array was truly being sorted correctly and that i didn't mess up the
-														// assert() somehow, so i set it up to print the elements of the array as it sorts through them.
+		
 		}
-
-		cout << endl;
 
 	} while (Swapped == true);
 
-	return Array[Size];
 }
 
 void AssertArray(int Array[], int Order[], size_t Size) {
@@ -38,9 +33,31 @@ void AssertArray(int Array[], int Order[], size_t Size) {
 	for (int i = 0; i < Size; i++) {
 														// It seems you can't directly compare arrays to eachother in asserts so i made a
 		assert(Array[i] == Order[i]);					// small function to iterate through each element to compare them all instead.
-
+		
 	}
 
+}
+
+int BinarySearch(int Array[], int Target, int Length) {
+
+	int Start = 0;
+
+	while (Length != 0) {
+
+		if (Array[Start + Length / 2] == Target) {				// This function repeatedly finds the middle value in a sorted array, then checks if it is equal the
+			return Start + Length / 2;							// target, and if it is not it checks whether it's smaller or larger than it and adjusts where it next
+		}														// starts the search and how many elements remain after that new point. Eventually the loop will either
+		if (Array[Start + Length / 2] > Target) {				// land on the index containing the target, or divide the length down to 0 (really 0.5 rounded down),
+			Length /= 2;										// which indicates to it that it mustn't exist and the while loop ends and leads to return -1.
+		}
+		else if (Array[Start + Length / 2] < Target) {
+			Start += Length / 2 + 1;
+			Length -= Length / 2 + 1;
+		}
+
+	} 
+
+	return -1;
 }
 
 
@@ -54,5 +71,10 @@ int main()
 	BubbleSort(IntArray, ArraySize);
 
 	AssertArray(IntArray, CorrectOrder, ArraySize);
+
+	assert(BinarySearch(IntArray, 11, ArraySize) == 4);
+	assert(BinarySearch(IntArray, 23, ArraySize) == 8);
+	assert(BinarySearch(IntArray, 97, ArraySize) == 19);
+	assert(BinarySearch(IntArray, 88, ArraySize) == -1);
 
 }
