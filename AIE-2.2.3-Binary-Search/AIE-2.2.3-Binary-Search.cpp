@@ -77,4 +77,20 @@ int main()
 	assert(BinarySearch(IntArray, 97, ArraySize) == 19);
 	assert(BinarySearch(IntArray, 88, ArraySize) == -1);
 
+	int Response;
+
+	for (int i = 0; i < 5; i++) {
+		cout << "==============================================\n\n" << "Enter a number to find its index in the array:" << endl;
+		cin >> Response;
+		int FoundAt = BinarySearch(IntArray, Response, ArraySize);
+
+		if (FoundAt == -1) {
+			cout << "Integer not found!\n" << endl;
+		}
+		else {
+			cout << "Integer found at: " << FoundAt << endl << endl;
+		}
+
+	}
+
 }
